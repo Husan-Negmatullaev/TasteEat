@@ -1,0 +1,27 @@
+// Заголовки, общие БЄМ блоки и проче...
+
+.social-links {
+    
+	// .social-links__content
+
+	&__content {
+        display: flex;
+        align-items: center;
+	}
+
+	// .social-links__item
+
+	&__item {
+        margin: 0px 20px 0px 0px;
+        &::before{
+            transition: color 0.3s ease 0s;
+        }
+        @media (any-hover: hover){
+            &:hover{
+                &::before{
+                    color: $orangeColor;                    
+                }
+            }
+        }
+	}
+}

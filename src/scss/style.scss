@@ -1,0 +1,350 @@
+@use "sass:math";
+
+// Подключение миксинов ===========================================================================================================================================================================================================================================================================
+@import "base/mixins";
+
+// Подключение шрифтов ===========================================================================================================================================================================================================================================================================
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Infant:wght@400;700&family=Josefin+Sans&display=swap');
+//&display=swap - добавить при подключении через плагин
+
+// Подключить если есть локальные файлы шрифтов
+@import "fonts/fonts";
+
+// Подключение иконочных шрифтов ==============================================================================================================================================================================================================================================================================
+// Подключить если есть файл иконочного шрифта
+@import "fonts/icons";
+
+// Шрифт по умолчанию ==============================================================================================================================================================================================================================================================================
+$fontFamily: "Josefin Sans";
+$fontSize: rem(14); // где 14(px) - размер шрифта по умолчанию из макета
+
+// Основные цвета
+$mainColor: #000; // Цвет шрифта по умолчанию
+
+// НАСТРОЙКИ ===============================================================================================================================================================================================================================================================================================
+// Минимальная ширина страницы
+$minWidth: 320;
+// Ширина полотна (макета)
+$maxWidth: 1440;
+// Ширина ограничивающего контейнера (0 = нет ограничения)
+$maxWidthContainer: 1360;
+// Общий отступ у контейнера
+// (30 = по 15px слева и справа, 0 = нет отступа)
+$containerPadding: 30;
+
+// Ширина срабатывания первого брейкпоинта
+$containerWidth: $maxWidthContainer + $containerPadding;
+
+// Брейк-поинты
+$pc: em($containerWidth); // ПК, ноутбуки, некоторые планшеты в горизонтальном положении
+$tablet: em(991.98); // Планшеты, некоторые телефоны в горизонтальном положении
+$mobile: em(767.98); // Телефоны L
+$mobileSmall: em(479.98); // Телефоны S
+
+// Главне цвета
+$orangeColor: #E1B168;
+$blackColor: #292E36;
+$whiteColor: #FFFFFF;
+
+// Тип адаптива:
+// 1 = отзывчивость (у контейнера нет брейкпоинтов),
+// 2 = по брейк-поинтам (контейнер меняет свою ширину по брейк-поинтам)
+$responsiveType: 1;
+
+// Обнуление и общие параметры ============================================================================================================================================================================================== =============================================================================================== ===============================================================================================
+@import "base/null";
+
+body {
+	// Скролл заблокирован
+	.lock & {
+		overflow: hidden;
+		touch-action: none;
+	}
+	// Сайт загружен
+	.loaded & {
+	}
+}
+// Оболочка ============================================================================================================================================================================================================================================================================================================================================================================================================================================
+.wrapper {
+	min-height: 100%;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	position: relative;
+	// Прижимаем footer
+	> main {
+		flex: 1 1 auto;
+	}
+	// Фикс для слайдеров
+	> * {
+		min-width: 0;
+	}
+}
+// Ограничивающий контейнер ======================================================================================================================================================================================================================
+
+/*
+(i) Стили будут применяться ко 
+всем классам содержащим *__container
+Например header__container, main__container и т.д.
+Снипет (HTML): cnt
+*/
+@if ($responsiveType==1) {
+	// Отзывчивая
+	[class*="__container"] {
+		@if ($maxWidthContainer>0) {
+			max-width: rem($maxWidthContainer);
+			box-sizing: content-box;
+			margin: 0 auto;
+		}
+		@if ($containerPadding>0) {
+			padding: 0 rem(math.div($containerPadding, 2));
+		}
+	}
+} @else {
+	// По брейк-поинтам
+	[class*="__container"] {
+		margin: 0 auto;
+		@if ($maxWidthContainer>0) {
+			max-width: rem($maxWidthContainer);
+			box-sizing: content-box;
+		} @else {
+			@if ($containerPadding>0) {
+				padding: 0 rem(math.div($containerPadding, 2));
+			}
+		}
+		@media (max-width: $pc) {
+			max-width: rem(970);
+		}
+		@media (max-width: $tablet) {
+			max-width: rem(750);
+		}
+		@media (max-width: $mobile) {
+			max-width: none;
+			@if ($containerPadding>0 and $maxWidthContainer>0) {
+				padding: 0 rem(math.div($containerPadding, 2));
+			}
+		}
+	}
+}
+
+// Подключение базовых стилей, шаблонов (заготовок) и вспомогательных  классов
+// Для подключения/отключения конкретных стилей смотри base.scss
+@import "base";
+
+// Подключение стилей общих элементов проекта
+@import "common";
+
+// Подключение стилей отдельных блоков
+@import "header";
+@import "footer";
+
+// Подключение стилей отдельных страниц
+@import "home";
+
+/* ===================================== */
+
+.page {
+
+	// .page__main-block
+
+	&__main-block {
+	}
+
+	// .page__info-block
+
+	&__info-block {
+	}
+}
+
+// ==========================
+
+.main-block {
+	@include adaptiveValue("padding-top", 45, 20, $containerWidth, $minWidth, 1);
+	@include adaptiveValue("padding-bottom", 45, 20, $containerWidth, $minWidth, 1);
+	background-color: $blackColor;
+	// .main-block__container
+
+	&__container {
+	}
+
+	// .main-block__body
+
+	&__body {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	// .main-block__content
+
+	&__content {
+		@include adaptiveValue("margin-right", 50, 20, $containerWidth, $minWidth, 1);
+	}
+
+	// .main-block__title
+
+	&__title {
+		font-family: 'Cormorant Infant';
+		letter-spacing: 0.2px;
+		line-height: math.div(110, 100);
+		color: #fff;
+		@include adaptiveValue("font-size", 100, 40, $containerWidth, $minWidth, 1);
+		@include adaptiveValue("margin-bottom", 25, 15, $containerWidth, $minWidth, 1);
+	}
+
+	// .main-block__text
+
+	&__text {
+		font-weight: 400;
+		letter-spacing: 0.2px;
+		line-height: math.div(30, 20);
+		color: #fff;
+		@include adaptiveValue("font-size", 20, 16, $containerWidth, $minWidth, 1);
+		&:not(:last-child) {
+			@include adaptiveValue("margin-bottom", 35, 20, $containerWidth, $minWidth, 1);
+		}
+	}
+
+	// .main-block__button
+
+	&__button {
+	}
+
+	// .main-block__image-ibg
+
+	&__image-ibg {
+		@media (max-width:$mobile){
+			display: none; 
+		}
+		flex: 0 0 percent(655, $containerWidth);
+		padding-bottom: percent(655, $containerWidth);
+		outline: 30px solid rgba(255, 255, 255, 0.1);
+		margin: 0px 30px 0px 0px;
+		position: relative;
+		&::after,
+		&::before {
+			content:'';
+			display: block;
+			position: absolute;
+			background-color: $blackColor;
+			width: 30px;
+			height: 30px;
+		}
+		&::after {
+			top: -30px;
+			left: -30px;
+		}
+		&::before {
+			top: -30px;
+			right: -30px;
+		}
+
+		img {
+			padding: 20px 20px 0 20px;
+			border-radius: 626px 626px 0px 0px;
+		}
+	}
+
+	img.main-block__image-fragment {
+		width: rem(313);
+		height: rem(313);
+		@media (max-width:$tablet){
+			display: none;
+		}
+		display: block;
+		position: absolute;
+		z-index: 2;
+		top: 26px;
+		right: 12px;
+		left: auto;
+		padding: 0;
+		border-radius: 0;
+		object-fit: none;
+		animation: infinite-spinning 20s infinite linear;
+		// margin: 26px 12px 0px 0px;
+	}
+}
+
+@keyframes infinite-spinning {
+	from {
+	  transform: rotate(0deg);
+	}
+	to {
+	  transform: rotate(360deg);
+	}
+  }
+
+// ==========================
+
+.info-block {
+	@include adaptiveValue("padding-top", 100, 40, $containerWidth, $minWidth, 1);
+	@include adaptiveValue("padding-bottom", 60, 20, $containerWidth, $minWidth, 1);
+	// .info-block__container
+
+	&__container {
+	}
+
+	// .info-block__body
+
+	&__body {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	// .info-block__item-info
+
+	&__item-info {
+		flex: 0 1 33.333%;
+	}
+}
+
+.item-info {
+
+	// .item-info__body
+
+	&__body {
+		display: flex;
+	}
+
+	// .item-info__icon
+
+	&__icon {
+		margin: 0px 20px 0px 0px;
+		background-color: $blackColor;
+		border-radius: 50%;
+		img  {
+			width: 52px;
+			height: 52px;
+		}
+	}
+
+	// .item-info__content
+
+	&__content {
+	}
+
+	// .item-info__title
+
+	&__title {
+		font-family: 'Cormorant Infant';
+		@include adaptiveValue("font-size", 30, 20, $containerWidth, $minWidth, 1);
+		line-height: math.div(39, 30);
+		letter-spacing: 0.2px;
+		color: $blackColor;
+	}
+
+	// .item-info__subtitle
+
+	&__subtitle {
+		@include adaptiveValue("font-size", 20, 16, $containerWidth, $minWidth, 1);
+		line-height: math.div(30, 20);
+		letter-spacing: 0.2px;
+		color: #555555;
+	}
+}
+
+
+// ==========================
+
+/* ===================================== */

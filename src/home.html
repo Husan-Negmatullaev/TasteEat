@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+	@@include('html/_head.htm',{
+	"title":"Главная"
+	})
+	<body>
+		<div class="wrapper">
+			@@include('html/_header.htm',{})
+			<main class="page">
+				<section class="page__main-block main-block">
+					<div class="main-block__container">
+						<div class="main-block__body">
+							<div class="main-block__content">
+								<h1 class="main-block__title">Welcome to <br> Restaurant</h1>
+								<p class="main-block__text">The people, food and the prime locations make the perfect place good friends & family to come together and have great time.</p>
+								<a href="#" class="main-block__button button button_transparent-color">
+									View Menu
+								</a>
+							</div>
+							<div class="main-block__image-ibg">
+								<img src="@img/main-block/02.png" class="main-block__image-fragment" alt="">
+								<img data-src="@img/main-block/01.png" alt="">
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class="page__info-block info-block">
+					<div class="info-block__container">
+						<div class="info-block__body">
+							<div class="info-block__item-info item-info">
+								<div class="item-info__body">
+									<div class="item-info__icon">
+										<img src="@img/icons/icons.svg#svg-mark" alt="">
+									</div>
+									<div class="item-info__content">
+										<h3 class="item-info__title">Located Us</h3>
+										<p class="item-info__subtitle">Riverside 25, San Diego, California</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</main>
+			@@include('html/_footer.htm',{})
+		</div>
+		@@include('html/_popup.htm',{})
+		@@include('html/_js.htm',{})
+	</body>
+</html>
